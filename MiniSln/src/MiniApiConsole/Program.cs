@@ -9,3 +9,5 @@ app.MapGet("/hello/{name}", (string name) => $"Hi, {name}!");
 //Console.WriteLine("Hello, World!");
 
 app.Run();
+
+public partial class Program { }
