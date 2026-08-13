@@ -121,18 +121,25 @@ curl -X GET http://localhost:5000/hello/myuser
 
 ## xunit
 
+- localhost
+
 ```sh
 dotnet nuget locals all --clear
 ```
 
+- add dependencie
+
+```sh
+cd tests/MiniApiConsole.Tests
+```
+
+```sh
+dotnet add package Microsoft.AspNetCore.Mvc.Testing --version 8.0.8
+```
+
 ```sh
 dotnet clean
-```
-
-```sh
 dotnet restore --verbosity detailed
-```
-
-```sh
+dotnet build
 dotnet test
 ```
