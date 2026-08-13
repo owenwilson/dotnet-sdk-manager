@@ -1,11 +1,28 @@
 # MiniApiConsole
 
+## structure proyect
+
+```sh
+MiniSln/
+├── global.json
+├── MiniSln.sln
+├── README.md
+├── src
+│   └── MiniApiConsole
+│       ├── MiniApiConsole.csproj
+│       └── Program.cs
+└── tests
+    └── MiniApiConsole.Tests
+        ├── MiniApiConsole.Tests.csproj
+        └── UnitTest1.cs
+```
+
 ## create proyect
 
 - create folder
 
 ```sh
-mkdir MiniApiConsole
+mkdir MiniSln
 ```
 
 - check out specify version
@@ -36,5 +53,86 @@ cat global.json
 - init proyect
 
 ```sh
+mkdir -p src/MiniApiConsole
 dotnet new console
+```
+
+- configure tests
+
+```sh
+cd MiniSln
+dotnet new sln
+dotnet sln add src/MiniApiConsole/MiniApiConsole.csproj
+```
+
+```sh
+cd tests/
+dotnet new xunit -n MiniApiConsole.Tests
+cd ..
+```
+
+```sh
+dotnet sln add tests/MiniApiConsole.Tests/MiniApiConsole.Tests.csproj
+cd tests/MiniApiConsole.Tests/
+dotnet add reference ../../src/MiniApiConsole/MiniApiConsole.csproj
+cd ../../
+```
+
+```sh
+dotnet sln add tests/MiniApiConsole.Tests/MiniApiConsole.Tests.csproj
+dotnet clean
+rm -rf ./src/MiniApiConsole/bin/
+rm -rf ./src/MiniApiConsole/obj/
+rm -rf ./tests/MiniApiConsole.Tests/obj/
+```
+
+```sh
+dotnet restore
+dotnet build
+dotnet test
+```
+
+## run example
+
+- restore
+
+```sh
+cd ./src/MiniApiConsole
+dotnet restore
+```
+
+- build
+
+```sh
+dotnet build
+```
+
+- run
+
+```sh
+dotnet run
+```
+
+- test endpoint
+
+```sh
+curl -X GET http://localhost:5000/hello/myuser
+```
+
+## xunit
+
+```sh
+dotnet nuget locals all --clear
+```
+
+```sh
+dotnet clean
+```
+
+```sh
+dotnet restore --verbosity detailed
+```
+
+```sh
+dotnet test
 ```
