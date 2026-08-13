@@ -58,6 +58,10 @@ dotnet --version
 dotnet new console
 ```
 
+## MiniSln Proyect
+
+- please check out [MiniSln Example](./MiniSln/README.md)
+
 ## references
 
 - check out [dotnet install script](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
