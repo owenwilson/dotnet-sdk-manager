@@ -5,5 +5,35 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: BuildApp
-  - stage: DeployDev
+  - stage: BuildDev
+    displayName: Build for DEV
+    jobs:
+      - job: BuildApp
+        displayName: Build APP .net
+        steps:
+          - script: echo building dotnet app
+            displayName: building dotnet app
+          - script: echo running unit tests
+            displayName: running unit tests
+      - job: BuildReactApp
+      - job: BuildNodeApp
+  - stage: BuildStaging
+    displayName: Build for Staging
+    jobs:
+      - job: BuildApp
+        displayName: Build APP .net
+        steps:
+          - script: echo building dotnet app
+            displayName: building dotnet app
+          - script: echo running unit tests
+            displayName: running unit tests
+  - stage: DeployProd
+    displayName: Build for Prod
+    jobs:
+      - job: BuildApp
+        displayName: Build APP .net
+        steps:
+          - script: echo building dotnet app
+            displayName: building dotnet app
+          - script: echo running unit tests
+            displayName: running unit tests
