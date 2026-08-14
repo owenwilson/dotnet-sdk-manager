@@ -15,9 +15,15 @@ stages:
             displayName: building dotnet app
           - script: echo running unit tests
             displayName: running unit tests
-      - job: BuildReactApp
-      - job: BuildNodeApp
+      - job: RestoreDependencies
+        displayName: Restore dependencies
+        dependsOn: BuildApp
+        steps:
+          - script: echo dotnet restore
+            displayName: restoring project dependencies
   - stage: BuildStaging
+    dependsOn: BuildDev
+    condition: succeeded('BuildDev')
     displayName: Build for Staging
     jobs:
       - job: BuildApp
@@ -28,6 +34,10 @@ stages:
           - script: echo running unit tests
             displayName: running unit tests
   - stage: DeployProd
+    dependsOn: 
+      - BuildDev
+      - BuildStaging
+    condition: and(succeeded('BuildDev'), succeeded('BuildStaging'))
     displayName: Build for Prod
     jobs:
       - job: BuildApp
