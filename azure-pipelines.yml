@@ -11,7 +11,8 @@ stages:
       - job: BuildApp
         displayName: Build APP .net
         steps:
-          - script: echo building dotnet app
+          - script: echo building dotnet app && ls -la
+            workingDirectory: '$(System.DefaultWorkingDirectory)/MiniSln'
             displayName: building dotnet app
           - script: echo running unit tests
             displayName: running unit tests
