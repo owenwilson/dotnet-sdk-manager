@@ -23,6 +23,14 @@ export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 ```
 
+## install azure-cli
+
+- please check out [install azure cli linux](https://learn.microsoft.com/es-es/cli/azure/install-azure-cli-linux?view=azure-cli-latest&pivots=dnf)
+
+```sh
+sudo dnf install azure-cli
+```
+
 ## change version
 
 - after installation, the dotnet settings folder is located in the home foler
