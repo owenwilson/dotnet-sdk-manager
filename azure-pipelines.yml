@@ -21,17 +21,40 @@ stages:
             inputs:
               packageType: sdk
               version: '$(dotNetVersion)'
+
+          # example list files in workspace
           - script: echo building dotnet app && ls -la
             workingDirectory: '$(System.DefaultWorkingDirectory)/MiniSln'
             displayName: building dotnet app
+
             # restore dependencies
           - task: DotNetCoreCLI@2
             displayName: 'restore dependencies'
             inputs:
               command: 'restore'
               projects: 'MiniSln/**/*.csproj'
+
+            # build MiniSln
+          - task: DotNetCoreCLI@2
+            displayName: 'build'
+            inputs:
+              command: 'build'
+              projects: 'MiniSln/**/*.csproj'
+              arguments: '--configuration $(buildConfiguration) --no-restore'
+
+          # test MiniSln
+          - task: DotNetCoreCLI@2
+            displayName: 'unit test'
+            inputs:
+              command: 'test'
+              projects: 'MiniSln/**/*.csproj'
+              arguments: '--configuration $(buildConfiguration) --no-build'
+
+          # echo test 
           - script: echo running unit tests
             displayName: running unit tests
+
+      # echo restore
       - job: RestoreDependencies
         displayName: Restore dependencies
         dependsOn: BuildApp
