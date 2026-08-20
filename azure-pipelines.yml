@@ -4,6 +4,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  buildConfiguration: 'Release'
+  dotNetVersion: '8.0.424'
+
 stages:
   - stage: BuildDev
     displayName: Build for DEV
@@ -11,9 +15,21 @@ stages:
       - job: BuildApp
         displayName: Build APP .net
         steps:
+          # install dotnet
+          - task: UseDotNet@2
+            displayName: 'install dotnet SDK $(dotNetVersion)'
+            inputs:
+              packageType: sdk
+              version: '$(dotNetVersion)'
           - script: echo building dotnet app && ls -la
             workingDirectory: '$(System.DefaultWorkingDirectory)/MiniSln'
             displayName: building dotnet app
+            # restore dependencies
+          - task: DotNetCoreCLI@2
+            displayName: 'restore dependencies'
+            inputs:
+              command: 'restore'
+              projects: 'MiniSln/**/*.csproj'
           - script: echo running unit tests
             displayName: running unit tests
       - job: RestoreDependencies
